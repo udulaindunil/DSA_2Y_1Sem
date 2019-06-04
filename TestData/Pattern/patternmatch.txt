@@ -1,0 +1,7 @@
+
+Pattern = ud
+ Positions  =>   0
+Pattern = in
+ Positions  =>   6
+Pattern = sen
+ Positions  =>   14  21  33
