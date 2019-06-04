@@ -48,7 +48,7 @@ public class Main {
                    }
                 Integer numberOfPatterns = patterns.size();
                 
-                PrintWriter writer = null;
+             
                 
                 
                 if(cahractersCountOfTestFile.equals(0)){
@@ -60,12 +60,13 @@ public class Main {
                 }else{
                     
                         
-                        writer = new PrintWriter(patternMatchFile);
+                       
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(patternMatchFile));
                         for(int index=0;index<numberOfPatterns;index++){
 
                             String patternWord = patterns.get(index);         
                             int print=-1;
-                            for(int counter=0;counter<(cahractersCountOfTestFile-patternWord.length());counter++) { 
+                            for(Integer counter=0;counter<(cahractersCountOfTestFile-patternWord.length());counter++) { 
                                 int j=0;
                                 while(j<patternWord.length() && ((textCharArray[counter+j]==patternWord.charAt(j))||(patternWord.charAt(j)=='_'))){
                                     j++;
@@ -73,14 +74,18 @@ public class Main {
                                 if(j==patternWord.length()){
                                     if(print!=index){
                                         System.out.printf("The Pattern = %s\n Positions\n",patternWord);
-                                            writer.write("      Pattern = "+patternWord+"");
+                                            writer.newLine();
+                                            writer.write("Pattern = ");
+                                            writer.write(patternWord);
+                                            writer.newLine();
                                             writer.write(" Positions  => ");
 
                                     }
                                     print=index;
 
                                     System.out.printf(" %d\n",counter);
-                                    writer.write("  "+ counter);
+                                    writer.write("  ");
+                                    writer.write(counter.toString());
                                 }else{
 
                                 }
