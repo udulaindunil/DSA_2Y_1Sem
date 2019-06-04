@@ -34,90 +34,91 @@ public class DNA {
             Integer cahractersCountOfTestFile=0;
             BufferedReader br1 = new BufferedReader(dnaFile);
                 String line1 = br1.readLine();
+                int dbDescriptionPosition=0;
                 while (line1 != null) {
-                    StringBuilder sb1 = new StringBuilder();
-                    if(line1.charAt(0)=='>'){
-                        sb1.append(line1);
-                        dbDescription.add(sb1.toString());
-                    }else{
-                        sb1.append(line1);  
-                    }
-//                    while(line1.charAt(0)!='>'){
-//                        
-//                        sb1.append(line1);  
-//                        line1 = br1.readLine();
-//                    }                   
-                        String dnaString = sb1.toString();
-//                        System.out.println(dnaString);
-                        if(dnaString.isEmpty()){
+                        StringBuilder sb1 = new StringBuilder();
+                    
+                        if(line1.charAt(0)=='>'){
+                            sb1.append(line1);
+                            dbDescription.add(sb1.toString());
+                            line1 = br1.readLine();
                         }else{
+                            while(line1.charAt(0)!='>'){
+                                    sb1.append(line1);
+                                    line1 = br1.readLine();
+                                }
+                            String dnaString = sb1.toString();
                             DNA.add(dnaString);
                         }
-                        line1 = br1.readLine();                   
+                                           
                     } 
                 
                 BufferedReader br2 = new BufferedReader(query);
                 String line2 = br2.readLine();
+                String Description = null;
                 while (line2 != null) {
-                    System.out.println(line2.charAt(0));
+                   // System.out.println(line2);
                     StringBuilder sb2 = new StringBuilder();
                     
                     if(line2.charAt(0)=='>'){
                         sb2.append(line2);
-                        System.out.println(sb2.toString());
                         queryDescription.add(sb2.toString());
+                        line2 = br2.readLine();
                     }else{
-                        sb2.append(line2);  
-//                        line2 = br2.readLine();
-                    }
-                    
-//                    while(line2.charAt(0)!='>'){
-//                        sb2.append(line2);  
-//                        line2 = br2.readLine();
-//                    }                   
+                        while(line2.charAt(0)!='>'){
+                            sb2.append(line2);
+                            line2 = br2.readLine();
+                        } 
                         String queryString = sb2.toString();
-//                        System.out.println(queryString);
-                        if(queryString.isEmpty()){
-                        }else{
-                            QUERY.add(queryString);
-                        }
-                        line2 = br2.readLine();                   
-                    } 
-                
-//                System.out.println(DNA); 
-//                System.out.println(DNA.size());
-//                
-//                System.out.println(QUERY); 
-//                System.out.println(QUERY.size());
+                        QUERY.add(queryString); 
+                    }                  
+                    }               
 
                 Integer index = null;
-                PrintWriter writer = null;
-                writer = new PrintWriter(dnaResult);
+//                PrintWriter writer = null;
+//                FileWriter fw = new FileWriter(dnaResult,true);
+                BufferedWriter writer = new BufferedWriter(new FileWriter(dnaResult));
+//                writer = new PrintWriter(dnaResult);
                 for(int numberOfQueries=0;numberOfQueries<QUERY.size();numberOfQueries++){
+                    int flag=0;
                     String queryString = QUERY.get(numberOfQueries);
+                    System.out.println(queryDescription.get(numberOfQueries));
+                    writer.write(queryDescription.get(numberOfQueries));
+                    writer.newLine();
+                    
+                    
                     for(int numberOfDnaPatters=0;numberOfDnaPatters<DNA.size();numberOfDnaPatters++){
                         String dnaString = DNA.get(numberOfDnaPatters);
+                     
                         
-                        for(int count=0;count<(dnaString.length()-queryString.length());count++){
+                        for(Integer count=0;count<(dnaString.length()-queryString.length());count++){
                             int j=0;
                             while(j<queryString.length() && (dnaString.charAt(count+j)==queryString.charAt(j))){
                                     j++;
                                 }
                             if(j==queryString.length()){
-                               System.out.printf("\nquery = %s Dna %d  index %d", queryString,numberOfDnaPatters,count);
+                                System.out.print(dbDescription.get(numberOfDnaPatters));
+                                writer.write(dbDescription.get(numberOfDnaPatters));
+                                System.out.printf("   at offset %d \n",count);
+                                writer.write("   at offset  ");
+                                writer.write(count.toString());
+                                writer.newLine();
                                 
+                                flag=1;
                             }
                             
                         }
-                        
+                      
+                         
                     }
-                }
-                
-                System.out.println(queryDescription);
-                System.out.println(dbDescription);
-                
-                
-            
+                    if(flag==0){
+                        System.out.println("NOT Founded");
+                        writer.write("NOT Founded");
+                    }
+                    System.out.println("");
+                    writer.newLine();
+                }   
+            writer.close();
                 
 //          
 //            BufferedReader br = new BufferedReader(patterFile);
