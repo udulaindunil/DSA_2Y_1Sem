@@ -16,96 +16,168 @@ import java.util.LinkedList;
 public class DNA {
 
     public static void main(String[] args) {
-        LinkedList<String> patterns = new LinkedList<>(); 
+        LinkedList<String> QUERY = new LinkedList<>();
+        LinkedList<String> DNA = new LinkedList<>();
+        LinkedList<String> queryDescription = new LinkedList<>();
+        LinkedList<String> dbDescription = new LinkedList<>();
+        
+       
         try{
             
             
-            FileReader textFile = new FileReader("C:\\Users\\Indunil\\Desktop\\DNA Database.txt");
+            FileReader dnaFile = new FileReader("C:\\Users\\Indunil\\Desktop\\DNA Database.txt");
             
-            FileReader patterFile = new FileReader("C:\\Users\\Indunil\\Desktop\\pattern1.txt");
+            FileReader query = new FileReader("C:\\Users\\Indunil\\Desktop\\query.txt");
             
-            File patternMatchFile = new File("C:\\Users\\Indunil\\Desktop\\patternmatch.txt");
+            File dnaResult = new File("C:\\Users\\Indunil\\Desktop\\DnaResult.txt");
             
             Integer cahractersCountOfTestFile=0;
-            BufferedReader br1 = new BufferedReader(textFile);
-                StringBuilder sb1 = new StringBuilder();
+            BufferedReader br1 = new BufferedReader(dnaFile);
                 String line1 = br1.readLine();
-                System.out.println(line1);
-                //System.out.println(line1.charAt(0));
-                
                 while (line1 != null) {
-                        if(line1.charAt(0)=='>'){
-                            System.out.println("AAAAAAAAAAAAAAAAAAAAAAA");
-                        }else{
-                        }
+                    StringBuilder sb1 = new StringBuilder();
+                    if(line1.charAt(0)=='>'){
                         sb1.append(line1);
-                        sb1.append(System.lineSeparator());
-                        line1 = br1.readLine();
+                        dbDescription.add(sb1.toString());
+                    }else{
+                        sb1.append(line1);  
                     }
-                String textString = sb1.toString();
-                char[] textCharArray = textString.toCharArray();
-                cahractersCountOfTestFile= textCharArray.length;
+//                    while(line1.charAt(0)!='>'){
+//                        
+//                        sb1.append(line1);  
+//                        line1 = br1.readLine();
+//                    }                   
+                        String dnaString = sb1.toString();
+//                        System.out.println(dnaString);
+                        if(dnaString.isEmpty()){
+                        }else{
+                            DNA.add(dnaString);
+                        }
+                        line1 = br1.readLine();                   
+                    } 
                 
-                
-          
-            BufferedReader br = new BufferedReader(patterFile);
-                StringBuilder sb = new StringBuilder();
-                String line = br.readLine();
-                while (line != null) {
-                    sb.append(line);
-                    sb.append(System.lineSeparator());
-                    line = br.readLine();
-                }
-                String patternString = sb.toString();
-                
-                String[] words=patternString.split("\\s");
-                for(String w:words){  
-                    patterns.add(w);
-                   }
-                Integer numberOfPatterns = patterns.size();
-                
-                PrintWriter writer = null;
-                
-                
-                if(cahractersCountOfTestFile.equals(0)){
-                        System.out.println("No text contains on file");
-                        
-                }else if(patternString.isEmpty()){
-                        System.out.println("No Ptterns on read file");
-                        
-                }else{
+                BufferedReader br2 = new BufferedReader(query);
+                String line2 = br2.readLine();
+                while (line2 != null) {
+                    System.out.println(line2.charAt(0));
+                    StringBuilder sb2 = new StringBuilder();
                     
-                        
-                        writer = new PrintWriter(patternMatchFile);
-                        for(int index=0;index<numberOfPatterns;index++){
+                    if(line2.charAt(0)=='>'){
+                        sb2.append(line2);
+                        System.out.println(sb2.toString());
+                        queryDescription.add(sb2.toString());
+                    }else{
+                        sb2.append(line2);  
+//                        line2 = br2.readLine();
+                    }
+                    
+//                    while(line2.charAt(0)!='>'){
+//                        sb2.append(line2);  
+//                        line2 = br2.readLine();
+//                    }                   
+                        String queryString = sb2.toString();
+//                        System.out.println(queryString);
+                        if(queryString.isEmpty()){
+                        }else{
+                            QUERY.add(queryString);
+                        }
+                        line2 = br2.readLine();                   
+                    } 
+                
+//                System.out.println(DNA); 
+//                System.out.println(DNA.size());
+//                
+//                System.out.println(QUERY); 
+//                System.out.println(QUERY.size());
 
-                            String patternWord = patterns.get(index);         
-                            int print=-1;
-                            for(int counter=0;counter<(cahractersCountOfTestFile-patternWord.length());counter++) { 
-                                int j=0;
-                                while(j<patternWord.length() && ((textCharArray[counter+j]==patternWord.charAt(j))||(patternWord.charAt(j)=='_'))){
+                Integer index = null;
+                PrintWriter writer = null;
+                writer = new PrintWriter(dnaResult);
+                for(int numberOfQueries=0;numberOfQueries<QUERY.size();numberOfQueries++){
+                    String queryString = QUERY.get(numberOfQueries);
+                    for(int numberOfDnaPatters=0;numberOfDnaPatters<DNA.size();numberOfDnaPatters++){
+                        String dnaString = DNA.get(numberOfDnaPatters);
+                        
+                        for(int count=0;count<(dnaString.length()-queryString.length());count++){
+                            int j=0;
+                            while(j<queryString.length() && (dnaString.charAt(count+j)==queryString.charAt(j))){
                                     j++;
                                 }
-                                if(j==patternWord.length()){
-                                    if(print!=index){
-                                       // System.out.printf("The Pattern = %s\n Positions\n",patternWord);
-                                            writer.write("      Pattern = "+patternWord+"");
-                                            writer.write(" Positions  => ");
-
-                                    }
-                                    print=index;
-
-                                   // System.out.printf(" %d\n",counter);
-                                    writer.write("  "+ counter);
-                                }else{
-
-                                }
+                            if(j==queryString.length()){
+                               System.out.printf("\nquery = %s Dna %d  index %d", queryString,numberOfDnaPatters,count);
+                                
                             }
-
+                            
                         }
-                         writer.flush();
-                         writer.close();  
+                        
+                    }
                 }
+                
+                System.out.println(queryDescription);
+                System.out.println(dbDescription);
+                
+                
+            
+                
+//          
+//            BufferedReader br = new BufferedReader(patterFile);
+//                StringBuilder sb = new StringBuilder();
+//                String line = br.readLine();
+//                while (line != null) {
+//                    sb.append(line);
+//                    sb.append(System.lineSeparator());
+//                    line = br.readLine();
+//                }
+//                String patternString = sb.toString();
+//                
+//                String[] words=patternString.split("\\s");
+//                for(String w:words){  
+//                    patterns.add(w);
+//                   }
+//                Integer numberOfPatterns = patterns.size();
+//                
+//                PrintWriter writer = null;
+                
+                
+//                if(cahractersCountOfTestFile.equals(0)){
+//                        System.out.println("No text contains on file");
+//                        
+//                }else if(patternString.isEmpty()){
+//                        System.out.println("No Ptterns on read file");
+//                        
+//                }else{
+//                    
+//                        
+//                        writer = new PrintWriter(patternMatchFile);
+//                        for(int index=0;index<numberOfPatterns;index++){
+//
+//                            String patternWord = patterns.get(index);         
+//                            int print=-1;
+//                            for(int counter=0;counter<(cahractersCountOfTestFile-patternWord.length());counter++) { 
+//                                int j=0;
+//                                while(j<patternWord.length() && ((textCharArray[counter+j]==patternWord.charAt(j))||(patternWord.charAt(j)=='_'))){
+//                                    j++;
+//                                }
+//                                if(j==patternWord.length()){
+//                                    if(print!=index){
+//                                       // System.out.printf("The Pattern = %s\n Positions\n",patternWord);
+//                                            writer.write("      Pattern = "+patternWord+"");
+//                                            writer.write(" Positions  => ");
+//
+//                                    }
+//                                    print=index;
+//
+//                                   // System.out.printf(" %d\n",counter);
+//                                    writer.write("  "+ counter);
+//                                }else{
+//
+//                                }
+////                            }
+//
+//                        }
+//                         writer.flush();
+//                         writer.close();  
+//                }
               
                 
         }catch(Exception e){
