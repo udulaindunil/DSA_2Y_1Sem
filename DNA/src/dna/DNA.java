@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dna;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.io.*;
 import java.util.LinkedList;
@@ -75,10 +70,8 @@ public class DNA {
                     }               
 
                 Integer index = null;
-//                PrintWriter writer = null;
-//                FileWriter fw = new FileWriter(dnaResult,true);
+
                 BufferedWriter writer = new BufferedWriter(new FileWriter(dnaResult));
-//                writer = new PrintWriter(dnaResult);
                 for(int numberOfQueries=0;numberOfQueries<QUERY.size();numberOfQueries++){
                     int flag=0;
                     String queryString = QUERY.get(numberOfQueries);
@@ -105,11 +98,10 @@ public class DNA {
                                 writer.newLine();
                                 
                                 flag=1;
+                                break;
                             }
-                            
+                           
                         }
-                      
-                         
                     }
                     if(flag==0){
                         System.out.println("NOT Founded");
@@ -118,68 +110,7 @@ public class DNA {
                     System.out.println("");
                     writer.newLine();
                 }   
-            writer.close();
-                
-//          
-//            BufferedReader br = new BufferedReader(patterFile);
-//                StringBuilder sb = new StringBuilder();
-//                String line = br.readLine();
-//                while (line != null) {
-//                    sb.append(line);
-//                    sb.append(System.lineSeparator());
-//                    line = br.readLine();
-//                }
-//                String patternString = sb.toString();
-//                
-//                String[] words=patternString.split("\\s");
-//                for(String w:words){  
-//                    patterns.add(w);
-//                   }
-//                Integer numberOfPatterns = patterns.size();
-//                
-//                PrintWriter writer = null;
-                
-                
-//                if(cahractersCountOfTestFile.equals(0)){
-//                        System.out.println("No text contains on file");
-//                        
-//                }else if(patternString.isEmpty()){
-//                        System.out.println("No Ptterns on read file");
-//                        
-//                }else{
-//                    
-//                        
-//                        writer = new PrintWriter(patternMatchFile);
-//                        for(int index=0;index<numberOfPatterns;index++){
-//
-//                            String patternWord = patterns.get(index);         
-//                            int print=-1;
-//                            for(int counter=0;counter<(cahractersCountOfTestFile-patternWord.length());counter++) { 
-//                                int j=0;
-//                                while(j<patternWord.length() && ((textCharArray[counter+j]==patternWord.charAt(j))||(patternWord.charAt(j)=='_'))){
-//                                    j++;
-//                                }
-//                                if(j==patternWord.length()){
-//                                    if(print!=index){
-//                                       // System.out.printf("The Pattern = %s\n Positions\n",patternWord);
-//                                            writer.write("      Pattern = "+patternWord+"");
-//                                            writer.write(" Positions  => ");
-//
-//                                    }
-//                                    print=index;
-//
-//                                   // System.out.printf(" %d\n",counter);
-//                                    writer.write("  "+ counter);
-//                                }else{
-//
-//                                }
-////                            }
-//
-//                        }
-//                         writer.flush();
-//                         writer.close();  
-//                }
-              
+            writer.close();          
                 
         }catch(Exception e){
             System.out.println(e);
